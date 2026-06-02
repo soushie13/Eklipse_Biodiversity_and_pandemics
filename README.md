@@ -29,4 +29,4 @@ The analysis follows a two-step approach:
 2. Grouped into broader thematic categories
 3. Consolidated into final policy recommendations and research gaps
 
-⚠️ Note: The thematic grouping and final synthesis were conducted manually and are not automated in the R scripts.
+⚠️ Note: The thematic grouping and final synthesis were conducted manually and are not automated in the R scripts. Eklipse_textmining.R is an illustrative example.
