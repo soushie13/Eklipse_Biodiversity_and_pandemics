@@ -15,18 +15,26 @@ data <- read.csv("eklipse_gap_tm.csv",
                  encoding = "UTF-8")
 
 # 2. Tidy preprocessing with tidytext --------------------------
-tidy_recs <- data %>%
-  select(doc_id = 1, text = knowledge_gaps) %>%           # assuming first column is ID
-  unnest_tokens(output = "word", 
-                input = text, 
-                token = "ngrams", 
-                n = 5, n_min = 1) %>%                     
-  filter(!str_detect(word, "^[0-9]+$")) %>%                # remove numbers
-  anti_join(stop_words, by = "word") %>%                   # remove English stopwords
-  filter(str_length(word) >= 2)
+
+custom_stopwords <- c("future", "should", "could", "efforts", "must",
+                        "also", "however", "therefore", "thus", 
+                        "recommend", "recommendation", "study", "research",
+                        "need", "needed", "important", "key", "urgent")
+tidy_gaps <- data %>%
+  select(doc_id = 1, text = knowledge_gaps) %>% 
+  unnest_tokens(output = "word",
+                input = text,
+                token = "ngrams",
+                n = 5, n_min = 1) %>%
+  filter(!str_detect(word, "^[0-9]+$")) %>%                # remove pure numbers
+  filter(str_length(word) >= 2) %>%                        # remove very short tokens
+  anti_join(stop_words, by = "word") %>%                   # standard English stopwords
+  anti_join(tibble(word = custom_stopwords), by = "word") # custom stopwords
+
+
 
 # 3. Bag-of-Words: Term Frequency & Document Frequency ---------
-term_stats <- tidy_recs %>%
+term_stats <- tidy_gaps %>%
   count(word, sort = TRUE) %>%
   rename(Frequency = n) %>%
   mutate(Document_Frequency = map_int(word, ~ sum(tidy_recs$word == .x))) %>%

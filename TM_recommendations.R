@@ -14,6 +14,8 @@ data <- read.csv("eklipse_rec_tm.csv",
                  encoding = "UTF-8")
 #"eklipse_rec_tm.csv" had a single column : recommendations
 # 2. Tokenization with 1-5 n-grams -----------------------------
+
+
 # Custom n-gram tokenizer function
 ngram_tokenizer <- function(x, n_min = 1, n_max = 5) {
   NGramTokenizer(x, Weka_control(min = n_min, max = n_max))
@@ -29,7 +31,8 @@ tidy_tokens <- data %>%
   anti_join(stop_words, by = c("term" = "word"))   
 
 custom_stopwords <- c("recommend", "should", "could", "may", "must", 
-                      "also", "however", "therefore", "thus", "etc")
+                      "also", "however", "therefore", "thus", "etc","recommend", "recommendation", "study", "research",
+                      "need", "needed", "important", "key","urgent")
 
 tidy_tokens <- tidy_tokens %>%
   filter(!term %in% custom_stopwords)
