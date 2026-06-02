@@ -56,7 +56,7 @@ results <- term_stats %>%
 # =============================================
 #  Bag-of-Words Clustering
 # =============================================
-library(tidytext)
+library(tidyverse)
 library(widyr)       
 
 # Create DTM (sparse matrix) from top terms

@@ -3,7 +3,7 @@
 # =============================================
 
 library(tidyverse)
-library(tidytext)
+library(widyr)
 library(tm)        # still useful for some preprocessing
 library(RWeka)     # for n-gram tokenizer
 library(factoextra)# for visualization of clusters
