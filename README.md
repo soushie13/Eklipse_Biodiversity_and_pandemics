@@ -24,9 +24,12 @@ The analysis follows a two-step approach:
 2. Generation of a document-term matrix (bag-of-words)
 3. Inclusion of multi-word expressions (n-grams)
 4. Frequency-based identification of key terms
+5. Simple clustering to board themes (40 recommendations and 32 gaps)
 - Synthesis (manual)
 1. The most frequent terms and expressions were reviewed by the authors
-2. Grouped into broader thematic categories
-3. Consolidated into final policy recommendations and research gaps
+2. Iterative process for stop words
+3. Review broader thematic categories
+4. Synthesis to regroup the themes 
+5. Consolidated into 12 policy recommendations and 12 research gaps
 
-⚠️ Note: The thematic grouping and final synthesis were conducted manually and are not automated in the R scripts. Eklipse_textmining.R is an illustrative example.
+⚠️ Note: The final thematic grouping and synthesis were conducted manually and are not automated in the R scripts. Eklipse_textmining.R is an illustrative example.
