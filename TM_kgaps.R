@@ -6,7 +6,6 @@ library(tidyverse)
 library(tidytext)
 library(tm)        # still useful for some preprocessing
 library(RWeka)     # for n-gram tokenizer
-library(cluster)   # for clustering
 library(factoextra)# for visualization of clusters
 
 # 1. Read data -------------------------------------------------
@@ -60,11 +59,11 @@ dtm_matrix <- dtm_matrix[, colSums(dtm_matrix) >= 3]
 
 # 5. Cluster Analysis ------------------------------------------
 
-# --- A. Hierarchical Clustering on Terms (recommended for themes) ---
+# --- A. Hierarchical Clustering on Terms  ---
 # Transpose so terms are rows
 term_dtm <- t(dtm_matrix)
 
-# Use cosine similarity (better for text than Euclidean)
+# Use cosine similarity 
 cosine_sim <- function(x) {
   x <- as.matrix(x)
   crossprod(x) / sqrt(tcrossprod(colSums(x^2)))

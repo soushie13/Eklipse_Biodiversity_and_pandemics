@@ -58,7 +58,6 @@ results <- term_stats %>%
 # =============================================
 library(tidytext)
 library(widyr)       
-library(cluster)      # for hierarchical clustering
 
 # Create DTM (sparse matrix) from top terms
 top_terms <- results %>%
