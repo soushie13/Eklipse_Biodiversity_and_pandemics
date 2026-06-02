@@ -4,7 +4,7 @@ This repository contains the R scripts and supporting materials used to perform 
 The workflow applies a bag-of-words (document-term matrix) approach using the R packages tm and caret to systematically identify and prioritise recurring keywords and multi-word expressions extracted from the literature.
 
 Repository Structure
-1. R scripts used for text preprocessing and generation of the document-term matrix (bag-of-words), including n-gram analysis.
+1. R scripts used for text preprocessing and generation of the document-term matrix (bag-of-words), including n-gram analysisand hc clustering. The original scripts (Nov 2022) included some functions that were obsolete and were rewritten in feb 2026.
 2. Example xslx file with a portion of the raw extracted data
 3. Example CSV files replicating the structure of the original dataset (columns: recommendations, gaps). These are sample datasets only, provided to allow code execution.
 
