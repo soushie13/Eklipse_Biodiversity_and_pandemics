@@ -32,4 +32,4 @@ The analysis follows a two-step approach:
 4. Synthesis to regroup the themes 
 5. Consolidated into 12 policy recommendations and 12 research gaps
 
-⚠️ Note: The final thematic grouping and synthesis were conducted manually and are not automated in the R scripts. Eklipse_textmining.R is an illustrative example.
+⚠️ Note: The final thematic grouping and synthesis into 12 policy recommendations and 12 research gaps were conducted manually.
