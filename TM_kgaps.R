@@ -2,66 +2,6 @@
 # Knowledge gap Text Analysis: Bag-of-Words + Clustering
 #  (fixed for reproducibility)
 # =============================================
-#
-# Fixes applied (same categories as the recommendations script):
-#  1. Robust file reading. If this file has the same export quirks as
-#     eklipse_rec_tm.csv (unquoted commas inside a single free-text
-#     column), read.csv()/read_csv() will fail with "more columns than
-#     column names". We read line-by-line instead of comma-parsing, which
-#     sidesteps that entirely. NOTE: this assumes eklipse_gap_tm.csv is a
-#     single-column file (one knowledge gap per line), matching the
-#     structure of eklipse_rec_tm.csv. If it is actually a proper
-#     multi-column CSV (e.g. a real doc_id column + a text column), tell
-#     me and I'll switch this back to a normal delimited reader — I
-#     couldn't verify against the real file since it hasn't been uploaded.
-#  2. Explicit, consistent column naming (doc_id / text), rather than
-#     read.csv's automatic name-mangling of whatever the raw header is.
-#  3. RWeka removed. It was loaded but the script never actually calls
-#     RWeka::NGramTokenizer — token = "ngrams" in unnest_tokens() (which
-#     was already being used) is pure R and needs no Java/rJava.
-#  4. Removed `library(widyr)` — loaded but unused (cast_dtm() comes from
-#     tidytext/tm, not widyr).
-#  5. Added `library(tidytext)` — the original script uses unnest_tokens(),
-#     anti_join(stop_words), and cast_dtm(), all from tidytext, but never
-#     loads it. It would only have worked if tidytext happened to already
-#     be attached from a previous session — not reproducible from a clean
-#     R session.
-#  6. Replaced encoding = "UTF-8" (doesn't transcode) with readr's
-#     automatic BOM-aware UTF-8 reading.
-#  7. Fixed an undefined-variable bug: `tidy_recs` was referenced twice
-#     (in the Document_Frequency calculation and in the DTM step) but
-#     never defined anywhere in this script — it looks like a leftover
-#     from the companion recommendations script. Both places now
-#     correctly reference `tidy_gaps`.
-#  8. Fixed `select(doc_id = 1, text = knowledge_gaps)`: if knowledge_gaps
-#     is the only column, "column 1" and "knowledge_gaps" are the same
-#     column, so doc_id would end up containing text instead of an id.
-#     Replaced with an explicit `mutate(doc_id = row_number())`.
-#  9. Removed a duplicated block that computed `hc`/`clusters` with k = 35
-#     and then immediately overwrote both with k = 32 — dead code from
-#     what looks like an in-progress edit. Kept k = 32 (the value that
-#     was actually used downstream).
-# 10. Fixed the cosine-similarity function: `crossprod(x)` on a
-#     terms-by-documents matrix returns a documents x documents matrix,
-#     not the intended terms x terms matrix (tcrossprod is what's needed
-#     when terms are rows). As written, this either crashes downstream
-#     (tibble length mismatch when attaching cluster labels to term
-#     names) or, on data sizes where the two counts might coincidentally
-#     match, silently mislabels clusters. I verified both the bug and the
-#     fix on synthetic data. Replaced with a corrected term-term cosine
-#     similarity function.
-# 11. `fviz_dend()` now writes to a PNG file. In a non-interactive
-#     Rscript run there's no open graphics device, so the original call
-#     would silently produce nothing to look at.
-# 12. Added sessionInfo() at the end for the reproducibility record (pair
-#     with an renv lockfile for a publication package).
-#
-# NOTE: I was not able to run this script end-to-end against your real
-# data because eklipse_gap_tm.csv hasn't been uploaded yet. I tested each
-# fix individually (tokenizer args, the cosine-similarity dimension bug,
-# package availability) against synthetic data. Please run this against
-# the real file and share any error — I'm happy to debug further.
-# =============================================
 
 library(tidyverse)
 library(tidytext)
